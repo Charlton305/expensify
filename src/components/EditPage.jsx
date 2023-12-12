@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from "react-redux"
 import ExpenseForm from "./ExpenseForm"
-import { editExpense, removeExpense } from "../actions/expenses"
+import { editExpense, removeExpense } from "../reducers/expenses"
 import { useNavigate, useParams } from "react-router-dom"
 
-const EditPage = (props) => {
+const EditPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const id = useParams().id
@@ -14,8 +14,8 @@ const EditPage = (props) => {
     <div>
       <ExpenseForm
         expense={expense}
-        onSubmit={(data) => {
-          dispatch(editExpense(id, data))
+        onSubmit={(updates) => {
+          dispatch(editExpense({id, updates}))
           navigate("/")
         }}
       />

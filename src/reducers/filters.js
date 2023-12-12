@@ -1,37 +1,41 @@
 import moment from "moment"
+import { createSlice } from "@reduxjs/toolkit"
 
-const filtersReducerDefaultState = {
-    text: "",
-    sortBy: "date",
-    startDate: moment().startOf("month"),
-    endDate: moment().endOf("month")
+const initialState = {
+  text: "",
+  sortBy: "date",
+  startDate: moment().startOf("month"),
+  endDate: moment().endOf("month")
 }
 
-const filtersReducer = (state = filtersReducerDefaultState, action) => {
-    switch (action.type) {
-        case "SET_TEXT_FILTER":
-            return {
-                ...state,
-                text: action.text
-            }
-        case "SORT_BY":
-            return {
-                ...state,
-                sortBy: action.sortBy
-            }
-        case "SET_START_DATE":
-            return {
-                ...state,
-                startDate: action.startDate
-            }
-        case "SET_END_DATE":
-            return {
-                ...state,
-                endDate: action.endDate
-            }
-        default:
-            return state;
+const filtersReducer = createSlice({
+  name: 'filter',
+  initialState,
+  reducers: {
+    setTextFilter(state, action) {
+      state.text = action.payload
+    },
+    sortByAmount(state) {
+      state.sortBy = "amount"
+    },
+    sortByDate(state) {
+      state.sortBy = "date"
+    },
+    setStartDate(state, action) {
+      state.startDate = action.payload
+    },
+    setEndDate(state, action) {
+      state.endDate = action.payload
     }
-}
+  },
+})
 
-export default filtersReducer
+export const {
+  setTextFilter,
+  sortByAmount,
+  sortByDate,
+  setEndDate,
+  setStartDate
+} = filtersReducer.actions
+
+export default filtersReducer.reducer

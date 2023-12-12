@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { DateRangePicker } from "react-dates"
-import { setTextFilter, sortByAmount, sortByDate, setStartDate, setEndDate } from "../actions/filters"
+import { setTextFilter, sortByAmount, sortByDate, setStartDate, setEndDate } from "../reducers/filters.js"
 
 const ExpenseListFilters = () => {
   const dispatch = useDispatch()

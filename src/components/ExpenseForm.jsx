@@ -6,11 +6,12 @@ import 'react-dates/initialize';
 
 const ExpenseForm = (props) => {
   // initiate state
+  const expense = props.expense
   const initialState = {
-    description: props.expense ? props.expense.description : "",
-    note: props.expense ? props.expense.note : "",
-    amount: props.expense ? (props.expense.amount / 100).toString() : "",
-    createdAt: props.expense ? moment(props.expense.createdAt) : moment(),
+    description: expense ? expense.description : "",
+    note: expense ? expense.note : "",
+    amount: expense ? (expense.amount / 100).toString() : "",
+    createdAt: expense ? moment(expense.createdAt) : moment(),
     calendarFocused: false
   }
   const [description, setDescription] = useState(initialState.description)
