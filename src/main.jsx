@@ -6,13 +6,22 @@ import { Provider } from 'react-redux'
 import "./firebase/firebase.js"
 import "normalize.css/normalize.css";
 import "./styles/styles.scss";
+import { startSetExpenses } from './reducers/expenses.js'
 
 const store = configureStore()
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const jsx = (
   <React.StrictMode>
     <Provider store={store}>
       <AppRoutes />
     </Provider>
-  </React.StrictMode>,
+  </React.StrictMode>
 )
+
+const root = ReactDOM.createRoot(document.getElementById('root'))
+
+root.render(<p>Loading...</p>)
+
+store.dispatch(startSetExpenses()).then(() => {
+  root.render(jsx)
+})

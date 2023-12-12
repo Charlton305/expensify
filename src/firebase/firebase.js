@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, getDocs, doc, setDoc, updateDoc, deleteField, deleteDoc, getDoc, onSnapshot, query } from "firebase/firestore";
+// import { collection, addDoc, getDocs, doc, setDoc, updateDoc, deleteField, deleteDoc, getDoc, onSnapshot, query } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCYbdmtkvfM6CqntVDfRB5oWl626bWO83M",
@@ -17,14 +17,13 @@ const db = getFirestore(app);
 
 export default db
 
-const q = query(collection(db, "expenses"));
+// const q = query(collection(db, "expenses"));
 
-const unsubscribe = onSnapshot(q, (querySnapshot) => {
-  querySnapshot.docChanges().forEach((change) => {
-    // console.log(change.doc.data())
-  });
-  // console.log(cities);
-});
+// const unsubscribe = onSnapshot(q, (querySnapshot) => {
+//   querySnapshot.docChanges().forEach((change) => {
+//     console.log(change.doc.data())
+//   });
+// });
 
 // try {
 //   const docRef = await addDoc(collection(db, "users"), {

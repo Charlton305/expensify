@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import db from '../firebase/firebase'
-import { addDoc, collection } from "firebase/firestore"
+import { addDoc, collection, getDocs } from "firebase/firestore"
 
 const initialState = []
 
@@ -32,12 +32,34 @@ const expensesReducer = createSlice({
         }
       })
     },
+    setExpenses(state, action) {
+      return [
+        ...state,
+        ...action.payload
+      ]
+    }
   },
 })
 
-export const { addExpense, removeExpense, editExpense } = expensesReducer.actions
+export const { addExpense, removeExpense, editExpense, setExpenses } = expensesReducer.actions
 
-export const startAddExpense = (expense = {}, dis) => {
+export const startSetExpenses = () => {
+  return async (dispatch) => {
+    const arr = []
+    const response = await getDocs(collection(db, "expenses"))
+
+    response.forEach((doc) => {
+      const expense = doc.data()
+      arr.push({
+        ...expense,
+        id: doc.id
+      })
+    })
+    dispatch(setExpenses(arr))
+  }
+}
+
+export const startAddExpense = (expense = {}) => {
   return async (dispatch) => {
     const response = await addDoc(collection(db, "expenses"), {
       ...expense
