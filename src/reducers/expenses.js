@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import db from '../firebase/firebase'
-import { addDoc, collection, getDocs } from "firebase/firestore"
+import { addDoc, collection, getDocs, doc, deleteDoc } from "firebase/firestore"
 
 const initialState = []
 
@@ -68,6 +68,13 @@ export const startAddExpense = (expense = {}) => {
       id: response.id,
       ...expense
     }))
+  }
+}
+
+export const startRemoveExpense = (id) => {
+  return async (dispatch) => {
+    await deleteDoc(doc(db, "expenses", id))
+    dispatch(removeExpense(id))
   }
 }
 

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux"
 import ExpenseForm from "./ExpenseForm"
-import { editExpense, removeExpense } from "../reducers/expenses"
+import { editExpense, startRemoveExpense } from "../reducers/expenses"
 import { useNavigate, useParams } from "react-router-dom"
 
 const EditPage = () => {
@@ -15,12 +15,12 @@ const EditPage = () => {
       <ExpenseForm
         expense={expense}
         onSubmit={(updates) => {
-          dispatch(editExpense({id, updates}))
+          dispatch(editExpense({ id, updates }))
           navigate("/")
         }}
       />
       <button onClick={() => {
-        dispatch(removeExpense(id))
+        dispatch(startRemoveExpense(id))
         navigate("/")
       }}
       >Remove</button>
