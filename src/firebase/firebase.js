@@ -1,8 +1,11 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore"
+import { GoogleAuthProvider, getAuth } from 'firebase/auth';
 // import { collection, addDoc, getDocs, doc, setDoc, updateDoc, deleteField, deleteDoc, getDoc, onSnapshot, query } from "firebase/firestore";
 
-const firebaseConfig = {
+
+
+export const firebaseConfig = {
   apiKey: "AIzaSyCYbdmtkvfM6CqntVDfRB5oWl626bWO83M",
   authDomain: "expensify-cf0e5.firebaseapp.com",
   projectId: "expensify-cf0e5",
@@ -14,8 +17,12 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
+const auth = getAuth();
 
+export { provider, auth }
 export default db
+
 
 // const q = query(collection(db, "expenses"));
 
