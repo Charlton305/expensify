@@ -1,26 +1,17 @@
- import { createStore, combineReducers } from "redux"
+import { createStore, combineReducers } from "redux"
+import { configureStore } from "@reduxjs/toolkit"
 import expensesReducer from "../reducers/expenses"
 import filtersReducer from "../reducers/filters"
-import { configureStore } from "@reduxjs/toolkit"
-
-// export default () => {
-//     const store = createStore(
-//         combineReducers({
-//             expenses: expensesReducer,
-//             filters: filtersReducer
-//         }),
-//         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-//         )
-//     return store
-// }
+import authReducer from "../reducers/auth"
 
 export default () => {
   const store = configureStore({
     reducer: {
       expenses: expensesReducer,
-      filters: filtersReducer
+      filters: filtersReducer,
+      auth: authReducer
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false})
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })
   })
   return store
 }

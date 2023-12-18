@@ -2,17 +2,18 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import "./firebase/firebase.js"
 import AppRoutes from './routers/AppRoutes.jsx'
-import { history } from './helpers/history.js'
 import configureStore from './store/configureStore.js'
 import { Provider } from 'react-redux'
 import "normalize.css/normalize.css";
 import "./styles/styles.scss";
 import { startSetExpenses } from './reducers/expenses.js'
-// import { auth } from './actions/auth.js'
 import { BrowserRouter } from 'react-router-dom'
 import './actions/auth.js'
+import { auth } from './firebase/firebase.js'
+import { login, logout } from './reducers/auth.js'
 
 const store = configureStore()
+const root = ReactDOM.createRoot(document.getElementById('root'))
 
 const jsx = (
   <React.StrictMode>
@@ -24,11 +25,26 @@ const jsx = (
   </React.StrictMode>
 )
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
+let hasRendered = false;
+const renderApp = () => {
+  if (!hasRendered) {
+    root.render(jsx)
+  }
+};
 
 root.render(<p>Loading...</p>)
 
-store.dispatch(startSetExpenses()).then(() => {
-  root.render(jsx)
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    store.dispatch(login(user.uid))
+    store.dispatch(startSetExpenses()).then(() => {
+      renderApp()
+      hasRendered = true;
+    })
+  } else {
+    store.dispatch(logout())
+    renderApp()
+    hasRendered = false
+  }
 })
 

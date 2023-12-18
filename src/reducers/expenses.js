@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import db from '../firebase/firebase'
-import { addDoc, collection, getDocs, doc, deleteDoc, updateDoc } from "firebase/firestore"
+import { collection, getDocs, doc, deleteDoc, updateDoc, setDoc } from "firebase/firestore"
+import { v4 as uuid } from 'uuid'
 
 const initialState = []
 
@@ -34,7 +35,6 @@ const expensesReducer = createSlice({
     },
     setExpenses(state, action) {
       return [
-        ...state,
         ...action.payload
       ]
     }
@@ -44,10 +44,10 @@ const expensesReducer = createSlice({
 export const { addExpense, removeExpense, editExpense, setExpenses } = expensesReducer.actions
 
 export const startSetExpenses = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     const arr = []
-    const response = await getDocs(collection(db, "expenses"))
-
+    const userId = getState().auth.uid
+    const response = await getDocs(collection(db, "users", userId, "expenses"))
     response.forEach((doc) => {
       const expense = doc.data()
       arr.push({
@@ -60,27 +60,31 @@ export const startSetExpenses = () => {
 }
 
 export const startAddExpense = (expense = {}) => {
-  return async (dispatch) => {
-    const response = await addDoc(collection(db, "expenses"), {
+  return async (dispatch, getState) => {
+    const userId = getState().auth.uid
+    const expenseId = uuid()
+    const response = await setDoc(doc(db, "users", userId, "expenses", expenseId), {
       ...expense
     })
     dispatch(addExpense({
-      id: response.id,
+      id: expenseId,
       ...expense
     }))
   }
 }
 
 export const startRemoveExpense = (id) => {
-  return async (dispatch) => {
-    await deleteDoc(doc(db, "expenses", id))
+  return async (dispatch, getState) => {
+    const userId = getState().auth.uid
+    await deleteDoc(doc(db, "users", userId, "expenses", id))
     dispatch(removeExpense(id))
   }
 }
 
 export const startEditExpense = (id, updates) => {
-  return async (dispatch) => {
-    await updateDoc(doc(db, "expenses", id), {
+  return async (dispatch, getState) => {
+    const userId = getState().auth.uid
+    await updateDoc(doc(db, "users", userId, "expenses", id), {
       ...updates
     })
     dispatch(editExpense({

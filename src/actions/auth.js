@@ -1,6 +1,5 @@
 import { signInWithPopup, signOut } from "firebase/auth";
 import { provider, auth } from "../firebase/firebase";
-import { history } from "../helpers/history";
 
 export const startLogin = async () => {
   provider.setCustomParameters({ prompt: 'select_account' });

@@ -1,14 +1,10 @@
 import moment from "moment"
-import { history } from "../helpers/history"
 import { useState } from "react"
 import { SingleDatePicker } from "react-dates"
 import "react-dates/lib/css/_datepicker.css"
 import 'react-dates/initialize';
 
 const ExpenseForm = (props) => {
-  setTimeout(() => {
-    history.navigate("/")
-  }, 3000)
   // initiate state
   const expense = props.expense
   const initialState = {

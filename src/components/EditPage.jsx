@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux"
 import ExpenseForm from "./ExpenseForm"
 import { startEditExpense, startRemoveExpense } from "../reducers/expenses"
 import { useNavigate, useParams } from "react-router-dom"
+import { useEffect } from "react"
 
 const EditPage = () => {
   const navigate = useNavigate()
@@ -9,6 +10,12 @@ const EditPage = () => {
   const id = useParams().id
   const expenses = useSelector(state => state.expenses)
   const expense = expenses.find((expense) => expense.id === id)
+  
+  useEffect(() => {
+    if (!expense) {
+      navigate("/")
+    }
+  })
 
   return (
     <div>
