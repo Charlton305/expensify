@@ -11,6 +11,7 @@ import { BrowserRouter } from 'react-router-dom'
 import './actions/auth.js'
 import { auth } from './firebase/firebase.js'
 import { login, logout } from './reducers/auth.js'
+import LoadingPage from "./components/LoadingPage"
 
 const store = configureStore()
 const root = ReactDOM.createRoot(document.getElementById('root'))
@@ -32,7 +33,7 @@ const renderApp = () => {
   }
 };
 
-root.render(<p>Loading...</p>)
+root.render(<LoadingPage />)
 
 auth.onAuthStateChanged((user) => {
   if (user) {

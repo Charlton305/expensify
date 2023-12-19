@@ -10,27 +10,27 @@ const EditPage = () => {
   const id = useParams().id
   const expenses = useSelector(state => state.expenses)
   const expense = expenses.find((expense) => expense.id === id)
-  
-  useEffect(() => {
-    if (!expense) {
-      navigate("/")
-    }
-  })
+
+  const handleSubmit = (updates) => {
+    dispatch(startEditExpense(id, updates))
+    navigate("/")
+  }
+  const handleOnClick = () => {
+    dispatch(startRemoveExpense(id))
+    navigate("/")
+  }
 
   return (
     <div>
-      <ExpenseForm
-        expense={expense}
-        onSubmit={(updates) => {
-          dispatch(startEditExpense(id, updates))
-          navigate("/")
-        }}
-      />
-      <button onClick={() => {
-        dispatch(startRemoveExpense(id))
-        navigate("/")
-      }}
-      >Remove</button>
+      <div className="page-header">
+        <div className="content-container">
+          <h1 className="page-header__title">Edit expense</h1>
+        </div>
+      </div>
+      <div className="content-container">
+        <ExpenseForm expense={expense} onSubmit={handleSubmit} />
+        <button className="button--grey" onClick={handleOnClick}>Remove expense</button>
+      </div>
     </div>
   )
 }

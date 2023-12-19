@@ -1,0 +1,20 @@
+.button {
+  background: $blue;
+  border: none;
+  color: rgba(255, 255, 255, 0.885);
+  display: inline-block;
+  font-size: $font-size-large;
+  font-weight: 300;
+  line-height: 1;
+  padding: $s-size;
+  text-decoration: none;
+}
+
+.button--link {
+  background: none;
+}
+
+.button--grey {
+  @extend .button;
+  background: #888;
+}

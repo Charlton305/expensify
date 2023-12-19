@@ -10,17 +10,16 @@ const Header = () => {
     dispatch(startLogout)
   }
   return (
-    <div>
-      <header>
-        <h1>Expensify</h1>
-        <nav>
-          <Link to="/">Home </Link>
-          <br />
-          <NavLink to="/create">Add Expense </NavLink>
-        </nav>
-        <button onClick={handleStartLogout}>Logout</button>
-      </header>
-    </div>
+    <header className="header">
+      <div className="content-container">
+        <div className="header__content">
+          <Link className="header__title" to="/">
+            <h1>Expensify</h1>
+          </Link>
+          <button className="button button--link" onClick={handleStartLogout}>Logout</button>
+        </div>
+      </div>
+    </header>
   )
 }
 

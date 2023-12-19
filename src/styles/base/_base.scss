@@ -1,20 +1,26 @@
+* {
+  box-sizing: border-box;
+}
+
 html {
-    font-size: 10px;
+  font-size: 10px;
 }
 
 body {
-    font-family: helvetica, arial, sans-serif;
-    font-size: $m-size;
+  color: $dark-grey;
+  font-family: helvetica, arial, sans-serif;
+  font-size: $m-size;
+  line-height: 1.6;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 button:disabled {
-    cursor: default;
+  cursor: default;
 }
 
 .active {
-    font-weight: bold;
+  font-weight: bold;
 }

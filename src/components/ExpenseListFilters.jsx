@@ -15,39 +15,55 @@ const ExpenseListFilters = () => {
   const onFocusChange = (calendarFocused) => {
     setCalendarFocused(calendarFocused)
   }
+  const onTextChange = (e) => {
+    dispatch(setTextFilter(e.target.value))
+  }
+  const onSortChange = (e) => {
+    if (e.target.value === "amount") {
+      dispatch(sortByAmount())
+    } else if (e.target.value === "date") {
+      dispatch(sortByDate())
+    }
+  }
   return (
-    <div>
-      <input
-        type="text"
-        value={filters.text}
-        onChange={(e) => {
-          dispatch(setTextFilter(e.target.value))
-        }} />
-      <select
-        value={filters.sortBy}
-        onChange={(e) => {
-          if (e.target.value === "amount") {
-            dispatch(sortByAmount())
-          } else if (e.target.value === "date") {
-            dispatch(sortByDate())
-          }
-        }}>
-        <option value="date">Date</option>
-        <option value="amount">Amount</option>
-      </select>
+    <div className="content-container">
+      <div className="input-group">
+        <div className="input-group__item">
+          <input
+            type="text"
+            value={filters.text}
+            placeholder="Search expenses"
+            className="text-input"
+            onChange={onTextChange} />
+        </div>
+        <div className="input-group__item">
+          <select
+            value={filters.sortBy}
+            className="select"
+            onChange={onSortChange}>
+            <option value="date">Date</option>
+            <option value="amount">Amount</option>
+          </select>
+        </div>
+        <div className="input-group__item">
+          <DateRangePicker
+            startDate={filters.startDate}
+            startDateId={"startDateId"}
+            endDate={filters.endDate}
+            endDateId={"endDateId"}
+            onDatesChange={onDatesChange}
+            focusedInput={calendarFocused}
+            onFocusChange={onFocusChange}
+            numberOfMonths={1}
+            isOutsideRange={() => false}
+            showClearDates={true}
+          />
+        </div>
+      </div>
 
-      <DateRangePicker
-        startDate={filters.startDate}
-        startDateId={"startDateId"}
-        endDate={filters.endDate}
-        endDateId={"endDateId"}
-        onDatesChange={onDatesChange}
-        focusedInput={calendarFocused}
-        onFocusChange={onFocusChange}
-        numberOfMonths={1}
-        isOutsideRange={() => false}
-        showClearDates={true}
-      />
+
+
+
     </div>
   )
 }
